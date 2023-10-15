@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h3>Driver Info</h3>
+
+    <p>Driver ID: {{ driver_info[0] }}</p>
+    <p>Driver Name: {{ driver_info[1] + ' ' + driver_info[2] }}</p>
+    <p>Car Model: {{ driver_info[3] }}</p>
+    <p>Drive Class: {{ driver_info[4] }}</p>
+
+    <h3>Run Detail</h3>
+
+    <table class="table table-bordered text-center">
+        <thead>
+            <tr>
+                <th class="align-middle">Course Name</th>
+                <th class="align-middle">Run Num</th>
+                <th class="align-middle">Seconds</th>
+                <th class="align-middle">Cones</th>
+                <th class="align-middle">WD</th>
+                <th class="align-middle">Run Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for run in run_list %}
+                <tr>
+                    <td class="align-middle">{{ run[0] }}</td>
+                    <td class="align-middle">{{ run[1] }}</td>
+                    <td class="align-middle">{{ run[2] }}</td>
+                    <td class="align-middle">{{ run[3] }}</td>
+                    <td class="align-middle">{{ run[4] }}</td>
+                    <td class="align-middle">{{ run[5] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h3>Run Bests</h3>
+    <table class="table table-bordered text-center">
+        <thead>
+            <tr>
+                <th class="align-middle">Course Name</th>
+                <th class="align-middle">Run Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for run in run_best_list %}
+                <tr>
+                    <td class="align-middle">{{ run[0] }}</td>
+                    <td class="align-middle">{{ run[1] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h3>Overall Result: {{ overall_result }}</h3>
+</div>
+{% endblock %}

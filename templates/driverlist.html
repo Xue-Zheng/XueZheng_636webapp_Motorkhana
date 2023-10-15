@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Driver List</h2>
+    <h3>Current Drivers</h3>
+
+    <table class="table table-bordered text-center">
+        <thead>
+            <tr>
+                <th class="align-middle">Driver ID</th>
+                <th class="align-middle">Name</th>
+                <th class="align-middle">Date of Birth</th>
+                <th class="align-middle">Age</th>
+                <th class="align-middle">Care Giver</th>
+                <th class="align-middle">Car Model</th>
+                <th class="align-middle">Car Drive Class</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for driver in driver_list %}
+                <tr class="align-middle">
+                    <td class="align-middle {% if driver[4] is not none and driver[4] <= 16 %}bg-warning{% endif %}">{{ driver[0] }}</td>
+                    <td class="align-middle {% if driver[4] is not none and driver[4] <= 16 %}bg-warning{% endif %}">{{ driver[1] + ' ' + driver[2] }}</td>
+                    <td class="align-middle {% if driver[4] is not none and driver[4] <= 16 %}bg-warning{% endif %}">{{ driver[3] }}</td>
+                    <td class="align-middle {% if driver[4] is not none and driver[4] <= 16 %}bg-warning{% endif %}">{{ driver[4] }}</td>
+                    <td class="align-middle {% if driver[4] is not none and driver[4] <= 16 %}bg-warning{% endif %}">{{ driver[5] }}</td>
+                    <td class="align-middle {% if driver[4] is not none and driver[4] <= 16 %}bg-warning{% endif %}">{{ driver[-2] }}</td>
+                    <td class="align-middle {% if driver[4] is not none and driver[4] <= 16 %}bg-warning{% endif %}">{{ driver[-1] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

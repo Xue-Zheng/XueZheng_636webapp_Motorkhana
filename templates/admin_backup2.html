@@ -1,0 +1,205 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-3">
+            <!-- 左侧导航栏 -->
+            <h3>Admin Options</h3>
+            <ul class="list-group">
+                <li class="list-group-item"><a href="#junior-driver-list">Junior Driver List</a></li>
+                <li class="list-group-item"><a href="#driver-search">Driver Search</a></li>
+                <li class="list-group-item"><a href="#edit-runs">Edit Runs</a></li>
+                <li class="list-group-item"><a href="#add-driver">Add Driver</a></li>
+            </ul>
+        </div>
+        <div class="col-md-9">
+            <!-- 右侧内容 -->
+            <div id="junior-driver-list">
+                <h3>Junior Driver List</h3>
+                <table class="table table-bordered text-center">
+        <thead>
+            <tr>
+                <th class="align-middle">Junior Driver ID</th>
+                <th class="align-middle">Name</th>
+                <th class="align-middle">Date of Birth</th>
+                <th class="align-middle">Age</th>
+                <th class="align-middle">Care Giver ID</th>
+                <th class="align-middle">Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for driver in driver_list %}
+                <tr class="align-middle">
+                    <td class="align-middle">{{ driver[0] }}</td>
+                    <td class="align-middle">{{ driver[1] + ' ' + driver[2] }}</td>
+                    <td class="align-middle ">{{ driver[3] }}</td>
+                    <td class="align-middle ">{{ driver[4] }}</td>
+                    <td class="align-middle ">{{ driver[5] }}</td>
+                    <td class="align-middle ">{{ driver[6] + ' ' + driver[7] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+            </div>
+            <div id="driver-search">
+                <h3>Driver Search</h3>
+                <div class="container">
+        <form method="GET" action="{{ url_for('admin') }}">
+            <div class="row">
+                <div class="col-md-10">
+                    <input type="text" class="form-control" name="search_content" placeholder="Search content">
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary w-100">Search</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <table class="table table-bordered text-center mt-3">
+        <thead>
+            <tr>
+                <th class="align-middle">Driver ID</th>
+                <th class="align-middle">Name</th>
+                <th class="align-middle">Date of Birth</th>
+                <th class="align-middle">Age</th>
+                <th class="align-middle">Care Giver</th>
+                <th class="align-middle">Car Num</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for driver in driver_list2 %}
+                <tr class="align-middle">
+                    <td class="align-middle {% if driver[4] is not none and driver[4] <= 16 %}bg-warning{% endif %}">{{ driver[0] }}</td>
+                    <td class="align-middle {% if driver[4] is not none and driver[4] <= 16 %}bg-warning{% endif %}">{{ driver[1] + ' ' + driver[2] }}</td>
+                    <td class="align-middle {% if driver[4] is not none and driver[4] <= 16 %}bg-warning{% endif %}">{{ driver[3] }}</td>
+                    <td class="align-middle {% if driver[4] is not none and driver[4] <= 16 %}bg-warning{% endif %}">{{ driver[4] }}</td>
+                    <td class="align-middle {% if driver[4] is not none and driver[4] <= 16 %}bg-warning{% endif %}">{{ driver[5] }}</td>
+                    <td class="align-middle {% if driver[4] is not none and driver[4] <= 16 %}bg-warning{% endif %}">{{ driver[-1] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+            </div>
+            <div id="edit-runs">
+                <h3>Edit Runs</h3>
+               <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Driver's Run Details
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                {% for driver in driver_list3 %}
+                    <a class="dropdown-item" href="{{ url_for('admin', driver_id_to_edit_runs=driver[0]) }}">{{ driver[1] + ' ' + driver[2] }}</a>
+                {% endfor %}
+            </div>
+        </li>
+    </ul>
+
+    <h6>{% if driver_name %} {{ driver_name }}{% endif %}</h6>
+
+    <table class="table table-bordered text-center">
+        <thead>
+            <tr>
+                <th class="align-middle">Course Name</th>
+                <th class="align-middle">Run Num</th>
+                <th class="align-middle">Seconds</th>
+                <th class="align-middle">Cones</th>
+                <th class="align-middle">WD</th>
+                <th class="align-middle">Run Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for run in run_list %}
+                <tr>
+                    <td class="align-middle">{{ run[0] }}</td>
+                    <td class="align-middle">{{ run[1] }}</td>
+                    <td class="align-middle">{{ run[2] }}</td>
+                    <td class="align-middle">
+                        <form method="POST" action="{{ url_for('edit_run')}}">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <input type="text" name="cones" value="{{ run[3] }}" class="form-control w-100">
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="hidden" name="driver_id_to_edit_runs" value="{{ driver_id_to_edit_runs }}">
+                                    <input type="hidden" name="run" value="{{ run[1] }}">
+                                    <input type="hidden" name="course_name" value="{{ run[0] }}">
+                                    <button type="submit" class="btn btn-primary btn-block w-100">保存</button>
+                                </div>
+                            </div>
+                        </form>
+                    </td>
+                    <td class="align-middle">
+                        <form method="POST" action="{{ url_for('edit_run')}}">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <input type="text" name="wd" value="{{ run[4] }}" class="form-control w-100">
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="hidden" name="driver_id_to_edit_runs" value="{{ driver_id_to_edit_runs }}">
+                                    <input type="hidden" name="run" value="{{ run[1] }}">
+                                    <input type="hidden" name="course_name" value="{{ run[0] }}">
+                                    <button type="submit" class="btn btn-primary btn-block w-100">保存</button>
+                                </div>
+                            </div>
+                        </form>
+                    </td>
+                    <td class="align-middle">{{ run[5] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+            </div>
+            <div id="add-driver">
+                <h3>Add Driver</h3>
+                <div class="container mt-4">
+        <h2>Driver Info</h2>
+        <form method="POST" action="/add_driver">
+            <div class="mb-3">
+                <label for="firstName" class="form-label">First Name</label>
+                <input type="text" class="form-control" id="firstName" name="firstName">
+            </div>
+            <div class="mb-3">
+                <label for="surname" class="form-label">Surname</label>
+                <input type="text" class="form-control" id="surname" name="surname">
+            </div>
+            <div class="mb-3">
+                <label for="driverType" class="form-label">Driver Type</label>
+                <select class="form-select" id="driverType" name="driverType">
+                    <option value="Junior">Junior</option>
+                    <option value="NotJunior">Not Junior</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="dateOfBirth" class="form-label">Date of Birth</label>
+                <input type="date" class="form-control" id="dateOfBirth" name="dateOfBirth">
+            </div>
+            <div class="mb-3">
+                <label for="careGiver" class="form-label">Care Giver</label>
+                <select class="form-select" id="careGiver" name="careGiver">
+                    {% for driver in driver_list4 %}
+                        <option value="{{ driver[0] }}">{{ driver[2] ~ ' ' ~ driver[1] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="carList" class="form-label">Care Giver</label>
+                <select class="form-select" id="carList" name="carList">
+                    {% for car in car_list %}
+                        <option value="{{ car[0] }}">{{car[0]|string + ' (' +  car[1] ~ ' ' ~ car[2] + ')' }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <input type="hidden" name="driver_id_to_edit_runs" value="{{ driver_id_to_edit_runs }}">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

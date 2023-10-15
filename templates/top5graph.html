@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <!-- 访问 Plotly 内容传送网络（CDN）图表库 -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+<body>
+    <div id="centeredContainer" style="display: flex; justify-content: center;">
+        <div id="myHBarPlot" style="max-width:1000px;"></div>
+    </div>
+
+    <script>
+        // 注意每个水果名称后面的空格以在水平条之前留出间隙
+        const priceList = {{ value_list | tojson | safe }};
+        const fruitList = {{ name_list | tojson | safe }};
+
+        // 将价格列表按升序排序
+        priceList.sort((a, b) => b - a);
+
+        // 定义图表数据
+        const data = [{ x: priceList,  y: fruitList,  type:"bar", orientation:"h", marker: {color:"lightblue"} }];
+
+        // 定义图表布局
+        const layout = {
+            xaxis: {title: "Overall Result"},  // 删除范围设置
+            title: "Course Time",
+            margin: {
+                l: 150,  // 增加左边距以容纳标签
+                r: 50,
+                b: 50,
+                t: 50
+            }
+        };
+
+        // 使用 Plotly 显示图表
+        Plotly.newPlot("myHBarPlot", data, layout);
+
+    </script>
+
+</body>
+</html>
