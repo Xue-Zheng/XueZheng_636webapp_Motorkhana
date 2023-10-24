@@ -6,6 +6,7 @@
   * base.html
   * courselist.html
   * driverlist.html
+  * index.html
   * overall.html
   * runlist.html
   * top5graph.html
