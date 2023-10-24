@@ -8,7 +8,7 @@ from datetime import datetime
 import mysql.connector
 from mysql.connector import FieldType
 import connect
-#test
+
 app = Flask(__name__)
 app.secret_key = 'QQQWWWEEE123123'
 
@@ -26,6 +26,10 @@ def getCursor():
 
 @app.route("/")
 def home():
+    return render_template("index.html")
+
+@app.route("/base")
+def base():
     return redirect(url_for('overall'))
 
 @app.route("/listdrivers")
@@ -183,7 +187,18 @@ def get_overall_all():
 @app.route("/overall")
 def overall():
     overall_list, driverList = get_overall_all()
-    return render_template("overall.html", overall_list = overall_list, driver_list=driverList)
+    connection = getCursor()
+    connection.execute("SELECT course_id, name FROM course;")
+    courseList = connection.fetchall()
+    courseIds = [item[0] for item in courseList]
+    table = []
+    for item in overall_list:
+        row = [item[0], item[1]]
+        row += [i[1] for i in item[3]]
+        row.append(item[4])
+        row.append(item[5])
+        table.append(row)
+    return render_template("overall.html", course_ids = courseIds, table_overall = table, overall_list = overall_list, driver_list=driverList)
 
 @app.route("/admin")
 def admin():

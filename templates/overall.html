@@ -1,14 +1,46 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container mt-4">
+
+{#    <div class="d-flex justify-content-center">#}
+{#        <a href="{{ url_for('admin') }}" class="btn btn-primary">To Admin Dashboard</a>#}
+{#    </div>#}
+
     <h2>Overall Results</h2>
+
+    <table class="table text-center table-striped">
+        <thead>
+            <tr>
+                <td>ID</td>
+                <td>Name</td>
+                {% for course in course_ids %}
+                <td>{{ course }}</td>
+                {% endfor %}
+                <td>Overall</td>
+                <td>Bonus</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for table_row in table_overall %}
+            <tr>
+                {% for row_item in table_row %}
+                <td>{{ row_item }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <iframe src="{{ url_for('showgraph') }}" frameborder="0" width="100%" height="500"></iframe>
+
+    <h2>Details</h2>
 
     {% for driver in overall_list %}
     <div class="mb-4">
         <h5>Driver ID: {{ driver[0] }}</h5>
         <h5>Driver Name: {{ driver[1] }}</h5>
         <h5>Car Model: {{ driver[2] }}</h5>
-        <table class="table table-bordered text-center">
+        <table class="table text-center table-striped">
             <thead>
                 <tr>
                     <th class="align-middle">Course Name</th>
@@ -28,8 +60,6 @@
     </div>
     <hr>
     {% endfor %}
-
-    <iframe src="{{ url_for('showgraph') }}" frameborder="0" width="100%" height="500"></iframe>
 
 </div>
 {% endblock %}

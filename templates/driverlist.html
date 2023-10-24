@@ -4,12 +4,11 @@
     <h2>Driver List</h2>
     <h3>Current Drivers</h3>
 
-    <table class="table table-bordered text-center">
+    <table class="table text-center table-striped">
         <thead>
             <tr>
                 <th class="align-middle">Driver ID</th>
                 <th class="align-middle">Name</th>
-                <th class="align-middle">Date of Birth</th>
                 <th class="align-middle">Age</th>
                 <th class="align-middle">Care Giver</th>
                 <th class="align-middle">Car Model</th>
@@ -21,7 +20,6 @@
                 <tr class="align-middle">
                     <td class="align-middle {% if driver[4] is not none and driver[4] <= 16 %}bg-warning{% endif %}">{{ driver[0] }}</td>
                     <td class="align-middle {% if driver[4] is not none and driver[4] <= 16 %}bg-warning{% endif %}">{{ driver[1] + ' ' + driver[2] }}</td>
-                    <td class="align-middle {% if driver[4] is not none and driver[4] <= 16 %}bg-warning{% endif %}">{{ driver[3] }}</td>
                     <td class="align-middle {% if driver[4] is not none and driver[4] <= 16 %}bg-warning{% endif %}">{{ driver[4] }}</td>
                     <td class="align-middle {% if driver[4] is not none and driver[4] <= 16 %}bg-warning{% endif %}">{{ driver[5] }}</td>
                     <td class="align-middle {% if driver[4] is not none and driver[4] <= 16 %}bg-warning{% endif %}">{{ driver[-2] }}</td>
